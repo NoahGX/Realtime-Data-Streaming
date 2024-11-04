@@ -1,7 +1,11 @@
 import uuid
 import requests
+    import json
+    import time
+    import logging
 from airflow import DAG
 from datetime import datetime
+    from kafka import KafkaProducer
 from airflow.operators.python import PythonOperator
 
 def get_data():
