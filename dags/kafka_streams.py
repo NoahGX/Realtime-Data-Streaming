@@ -1,14 +1,6 @@
-import uuid
 import json
 import requests
-from airflow import DAG
 from datetime import datetime
-from airflow.operators.python import PythonOperator
-
-default_args = {
-    'owner': 'airflow',
-    'start_date': datetime(2024, 11, 9, 12, 00)
-}
 
 def get_data():
     res = requests.get("https://randomuser.me/api/")
@@ -19,7 +11,6 @@ def get_data():
 def format_data(res):
     data = {}
     location = res['location']
-    data['id'] = uuid.uuid4()
     data['first_name'] = res['name']['first']
     data['last_name'] = res['name']['last']
     data['gender'] = res['gender']
@@ -38,13 +29,3 @@ def stream_data():
     res = get_data()
     res = format_data(res)
     print(json.dumps(res, indent=3))
-
-with DAG('user_automation',
-         default_args=default_args,
-         schedule_interval='@daily',
-         catchup=False) as dag:
-      
-    streaming_task = PythonOperator(
-        task_id='stream_data_from_api',
-        python_callable=stream_data
-    )
