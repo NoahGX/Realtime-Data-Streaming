@@ -1,18 +1,16 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/bash
+set -e
 
-AIRFLOW_HOME="/opt/airflow"
-REQUIREMENTS_FILE="$AIRFLOW_HOME/requirements.txt"
-DB_FILE="$AIRFLOW_HOME/airflow.db"
-
-# Install requirements if the requirements.txt file exists
-if [[ -f "$REQUIREMENTS_FILE" ]]; then
+# Install Python packages if requirements.txt exists
+if [ -f "/opt/airflow/requirements.txt" ]; then
+  # Upgrade pip using the Python interpreter
   python -m pip install --upgrade pip
-  python -m pip install --user -r "$REQUIREMENTS_FILE"
+  # Install requirements from the specified file
+  pip install --user -r /opt/airflow/requirements.txt
 fi
 
-# Initialize the Airflow database and create an admin user if the database does not exist
-if [[ ! -f "$DB_FILE" ]]; then
+# Initialize the Airflow database if it doesn't exist
+if [ ! -f "/opt/airflow/airflow.db" ]; then
   airflow db init
   airflow users create \
     --username admin \
@@ -23,7 +21,7 @@ if [[ ! -f "$DB_FILE" ]]; then
     --password admin
 fi
 
-# Upgrade the Airflow database
+# Upgrade the Airflow database to the latest version
 airflow db upgrade
 
 # Start the Airflow webserver
