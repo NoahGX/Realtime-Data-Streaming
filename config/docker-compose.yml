@@ -202,7 +202,6 @@ services:
 
   cassandra_db:
     image: cassandra:latest
-    mem_limit: 2g
     container_name: cassandra
     hostname: cassandra
     ports:
