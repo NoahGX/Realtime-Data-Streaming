@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.4.0
+    image: confluentinc/cp-zookeeper:latest
     hostname: zookeeper
     container_name: zookeeper
     ports:
@@ -11,7 +11,7 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     healthcheck:
-      test: ["CMD", "echo", "ruok", "|", "nc", "localhost", "2181"]
+      test: ["CMD-SHELL", "echo ruok | nc localhost 2181 | grep 'imok' || exit 1" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -201,20 +201,21 @@ services:
       - confluent
 
   cassandra_db:
-    image: cassandra:4.0
+    image: cassandra:latest
+    mem_limit: 2g
     container_name: cassandra
     hostname: cassandra
     ports:
       - "9042:9042"
     environment:
       MAX_HEAP_SIZE: 512M
-      HEAP_NEWSIZE: 100M
+      HEAP_NEWSIZE: 128M
       CASSANDRA_USERNAME: cassandra
       CASSANDRA_PASSWORD: cassandra
     healthcheck:
-      test: ["CMD-SHELL", "cqlsh -u cassandra -p cassandra -e 'DESCRIBE KEYSPACES'"]
+      test: ["CMD-SHELL", "cqlsh", "-u cassandra", "-p cassandra", "-e 'DESCRIBE KEYSPACES'"]
       interval: 30s
-      timeout: 10s
+      timeout: 20s
       retries: 5
     networks:
       - confluent
