@@ -106,7 +106,7 @@ services:
   webserver:
     image: apache/airflow:latest
     command: webserver
-    container_name: airflow_webserver
+    container_name: airflow-webserver
     entrypoint: /opt/airflow/scripts/entrypoint.sh
     depends_on:
       postgres:
@@ -133,7 +133,7 @@ services:
   scheduler:
     image: apache/airflow:latest
     command: scheduler
-    container_name: airflow_scheduler
+    container_name: airflow-scheduler
     entrypoint: /opt/airflow/scripts/entrypoint.sh
     depends_on:
       webserver:
@@ -172,7 +172,7 @@ services:
     container_name: spark-master
     command: bin/spark-class org.apache.spark.deploy.master.Master
     ports:
-      - "8080:8080"   # Spark Master Web UI
+      - "9090:8080"   # Spark Master Web UI
       - "7077:7077"   # Spark Master Port
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost:8080/']
@@ -226,4 +226,4 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:
+  postgres-db:
