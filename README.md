@@ -54,7 +54,7 @@ The pipeline works as follows:
 ## Output
 - **Airflow UI Logs:** Real-time logs and status of DAGs.
 - **Cassandra Table:** Processed user data is written by Spark into the `spark_streams.created_users` table.
-- **Spark Streaming Logs:** Check the Spark driver and executor logs for details about streaming operations.
+- **Spark Streaming Logs:** The Spark driver and executor logs contain details about streaming operations.
 
 ## Notes
 - **Customization:** We can modify the Airflow DAG (`kafka_stream.py`) to fetch data from a different API or perform additional transformations.
