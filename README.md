@@ -60,4 +60,4 @@ The pipeline works as follows:
 - **Customization:** We can modify the Airflow DAG (`kafka_stream.py`) to fetch data from a different API or perform additional transformations.
 - **Security & Authentication:** This project is mainly for demonstration and development. For production environments, the best practice would be to add more security features (authentication, SSL, RBAC).
 - **Monitoring & Observability:** We can leverage Control Center and Spark UI for monitoring.
-- **Scaling Out:** Additional Spark workers or Kafka brokers can be added to the `docker-compose.yml` as needed.
+- **Scaling Out:** We can add Spark workers or Kafka brokers can be added to the `docker-compose.yml` as needed.
