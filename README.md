@@ -1,4 +1,4 @@
-# Realtime Data Streaming
+# Realtime Data Streaming Pipeline
 
 ## Overview
 In this self-project, we set up an end-to-end data streaming pipeline in realtime using Docker Compose. To accomplish this taks, we will integrate different components such as Apache Airflow, Apache Kafka, Apache Spark, Confluent Control Center, Confluent Schema Registry, PostgreSQL, and Cassandra. 
